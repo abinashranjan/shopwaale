@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "552566681393",
+    "firebase_url": "https://glossary-application.firebaseio.com",
+    "project_id": "glossary-application",
+    "storage_bucket": "glossary-application.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552566681393:android:6c35b3e49bf1b08d",
+        "android_client_info": {
+          "package_name": "com.example.shopwaale"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552566681393-save8lpp0pg552f09tuape0tr3figoqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIbNBSCqqATl710ghWmV40Pem45kczSm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552566681393-save8lpp0pg552f09tuape0tr3figoqd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
