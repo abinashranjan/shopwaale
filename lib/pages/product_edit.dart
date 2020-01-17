@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import '../widgets/helpers/ensure_visible.dart';
 import '../models/product.dart';
 import '../scoped-models/main.dart';
-import '../widgets/helpers/ensure_visible.dart';
+
 
 class ProductEditPage extends StatefulWidget {
-  //final Function deleteProduct;
-
   @override
   State<StatefulWidget> createState() {
     return _ProductEditPageState();
@@ -24,26 +24,26 @@ class _ProductEditPageState extends State<ProductEditPage> {
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _titleFocusNode = FocusNode();
-  final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
+  final _priceFocusNode = FocusNode();
 
   Widget _buildTitleTextField(Product product) {
     return EnsureVisibleWhenFocused(
       focusNode: _titleFocusNode,
       child: TextFormField(
         focusNode: _titleFocusNode,
-        validator: (String value) {
-          //if (value.trim().length <=0) {
-          if (value.isEmpty || value.length < 5) {
-            return 'title is required and should be 5+ characters.';
-          }
-        },
         decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Product Title here',
             // helperText: 'Your title',
             labelText: 'Title'),
         initialValue: product == null ? '' : product.title,
+        validator: (String value) {
+          //if (value.trim().length <=0) {
+          if (value.isEmpty || value.length < 5) {
+            return 'Title is required and should be 5+ characters.';
+          }
+        },
         onSaved: (String value) {
           _formData['title'] = value;
         },
@@ -51,18 +51,38 @@ class _ProductEditPageState extends State<ProductEditPage> {
     );
   }
 
+
+  Widget _buildDescriptionTextField(Product product) {
+    return EnsureVisibleWhenFocused(
+      focusNode: _descriptionFocusNode,
+      child: TextFormField(
+        focusNode: _descriptionFocusNode,
+        maxLines: 5,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Product Description',
+          helperText: 'Please fill your Product Data',
+          labelText: 'Product Description'),
+        initialValue: product == null ? '' : product.description,
+        validator: (String value) {
+          //if (value.trim().length <=0) {
+          if (value.isEmpty || value.length < 10) {
+            return 'Description is required and should be 10+ characters.';
+          }
+        },
+        onSaved: (String value) {
+          _formData['description'] = value;
+        },
+      ),
+    );
+  }
+
+
   Widget _buildPriceTextField(Product product) {
     return EnsureVisibleWhenFocused(
       focusNode: _priceFocusNode,
       child: TextFormField(
         focusNode: _priceFocusNode,
-        validator: (String value) {
-          //if (value.trim().length <=0) {
-          if (value.isEmpty ||
-              !RegExp(r'^(?:[1-9]\d*|0)?(?:[.,]\d+)?$').hasMatch(value)) {
-            return 'Price is required and should be Numbers.';
-          }
-        },
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
             border: OutlineInputBorder(),
@@ -73,6 +93,13 @@ class _ProductEditPageState extends State<ProductEditPage> {
             helperText: 'With GST',
             suffixStyle: TextStyle(color: Colors.green)),
         initialValue: product == null ? '' : product.price.toString(),
+        validator: (String value) {
+          //if (value.trim().length <=0) {
+          if (value.isEmpty ||
+              !RegExp(r'^(?:[1-9]\d*|0)?(?:[.,]\d+)?$').hasMatch(value)) {
+            return 'Price is required and should be Numbers.';
+          }
+        },
         onSaved: (String value) {
           _formData['price'] = double.parse(value);
         },
@@ -80,31 +107,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
     );
   }
 
-  Widget _buildDescriptionTextField(Product product) {
-    return EnsureVisibleWhenFocused(
-      focusNode: _descriptionFocusNode,
-      child: TextFormField(
-        focusNode: _descriptionFocusNode,
-        validator: (String value) {
-          //if (value.trim().length <=0) {
-          if (value.isEmpty || value.length < 10) {
-            return 'Description is required and should be 10+ characters.';
-          }
-        },
-        maxLines: 5,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Product Description',
-          helperText: 'Please fill your Product Data',
-          labelText: 'Description',
-        ),
-        initialValue: product == null ? '' : product.description,
-        onSaved: (String value) {
-          _formData['description'] = value;
-        },
-      ),
-    );
-  }
+  
 
   Widget _buildSubmitButton() {
     return ScopedModelDescendant<MainModel>(

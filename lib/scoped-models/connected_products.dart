@@ -6,7 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:scoped_model/scoped_model.dart';
-import 'package:shopwaale/pages/authentication.dart';
+import 'package:shopwaale/pages/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopwaale/widgets/ui_elements/logout_list_tile.dart';
 import 'package:rxdart/subjects.dart';
@@ -249,7 +249,7 @@ class UserModel extends ConnectedProductsModel {
   }
 
   Future<Map<String, dynamic>> authenticate(String email, String password,
-      [AuthenticationMode mode = AuthenticationMode.Login]) async {
+      [AuthMode mode = AuthMode.Login]) async {
     _isLoading = true;
     notifyListeners();
     final Map<String, dynamic> authenticationData = {
@@ -258,7 +258,7 @@ class UserModel extends ConnectedProductsModel {
       'returnSecureToken': true
     };
     http.Response response;
-    if (mode == AuthenticationMode.Login) {
+    if (mode == AuthMode.Login) {
       response = await http.post(
         'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyAP09Y_sfvfiNhQHSPAt7B5n8ueZ_WsZwQ',
         body: json.encode(authenticationData),
